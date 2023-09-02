@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Dash</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .centered {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .Answer_Selection_button {
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .Answer_Selection_button:hover {
+            background-color: #2980b9;
+        }
+        .h1_font {
+            font-size: 48px;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        .p_font {
+            font-size: 24px;
+            font-family: 'Arial', sans-serif;
+            color: #555;
+            margin-top: 20px;
+        }
+        #message {
+            font-size: 24px;
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        #score {
+            font-size: 24px;
+            color: #2ecc71;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <h1 class="h1_font">Where should this item go?</h1>
+        <p class="p_font" id="item_name_text">Click something to begin!</p>
+    </div>
+
+    <div class="centered">
+        <button id="Trash_btn" class="Answer_Selection_button" onclick="clickhandle('Trash_btn')">Trash</button> 
+        <button id="Compose_btn" class="Answer_Selection_button" onclick="clickhandle('Compose_btn')">Compose</button> 
+        <button id="Recycling_bin_btn" class="Answer_Selection_button" onclick="clickhandle('Recycling_bin_btn')">Recycling Bin</button> 
+        <button id="GreenBin_btn" class="Answer_Selection_button" onclick="clickhandle('GreenBin_btn')">Green Bin</button> 
+    </div>
+
+    <div id="message" class="centered"></div>
+    <div id="score" class="centered"></div>
+
+    <script>
+        
+        const items = [
+            "Banana Peel", "Apple Core", "Cherry Seeds", "Empty Plastic Water Bottle", "Food wrapper",
+            "Pet Waste", "Styrofoam container", "Plastic Fork", "Glass Bottle", "Aluminum Can",
+            "Cereal Box", "Newspaper", "Paper Towel Roll", "Eggshells", "Tea Bag", 
+            "Soda Can", "Greasy Pizza Box", "Plastic Bag", "Glass Jar", "Cardboard Box",
+            "Tin Can", "Plastic Spoon", "Paper Plate", "Aluminum Foil", "Plastic Cup"
+        ];  
+
+        let currentIndex = -1;
+        let shuffledItems = [];
+        let score = 0;
+        const maxScore = items.length;
+        let displayedItems = [];
+
+        function getRandomItem() {
+            if (shuffledItems.length === 0) {
+                // If the shuffledItems array is empty or all items have been displayed, reset the arrays
+                if (displayedItems.length === items.length) {
+                    displayedItems = [];
+                }
+                // Shuffle the original items array
+                shuffledItems = [...items];
+                shuffleArray(shuffledItems);
+            }
+            let item = shuffledItems.pop();
+            displayedItems.push(item);
+            return item;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function updateItemText() {
+            const itemText = getRandomItem();
+            document.getElementById('item_name_text').textContent = itemText;
+        }
+
+        function displayMessage(message, color) {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = message;
+            messageElement.style.color = color;
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = `Score: ${score}/${maxScore}`;
+        }
+
+        function clickhandle(buttonId) {
+            const currentItem = document.getElementById('item_name_text').textContent;
+
+            switch (buttonId) {
+                case 'Compose_btn': 
+                    if (currentItem === "Banana Peel" || currentItem === "Apple Core" || currentItem === "Cherry Seeds" || currentItem === "Greasy Pizza Box") {
+                        displayMessage('Correct! This item goes in the trash.', 'green');
+                        score++;
+                    } else {
+                        displayMessage('Incorrect.', 'red');
+                    }
+                    break;
+                case 'GreenBin_btn':
+                    if (currentItem === "Pet Waste "  || currentItem === "Coffee Grounds" || currentItem === "Eggshells" || currentItem === "Tea Bag" || currentItem === "Paper Plate") {
+                        displayMessage('Correct! This item can be composted.', 'green');
+                        score++;
+                    } else {
+                        displayMessage('Incorrect.', 'red');
+                    }
+                    break;
+                case 'Recycling_bin_btn':
+                    if (currentItem === "Milk Carton" || currentItem === "Soup Can" || currentItem === "Plastic Lid" || currentItem === "Plastic Straw" || currentItem === "Empty Plastic Water Bottle" || currentItem === "Styrofoam container" || currentItem === "Glass Bottle" || currentItem === "Aluminum Can" ||currentItem === "Cereal Box" || currentItem === "Newspaper" || currentItem === "Paper Towel Roll" || currentItem === "Soda Can" || currentItem === "Plastic Bag" || currentItem === "Glass Jar" || currentItem === "Cardboard Box" || currentItem === "Tin Can" || currentItem === "plastic cup") {
+                        displayMessage('Correct! This item goes in the recycling bin.', 'green');
+                        score++;
+                    } else {
+                        displayMessage('Incorrect.', 'red');
+                    }
+                    break;
+                case 'Trash_btn':
+                    if (currentItem === "Food wrapper" || currentItem === "Plastic Fork" || currentItem === "Plastic Spoon" || currentItem === "paper plate" || currentItem === aluminum foil) {
+                        displayMessage('Correct! This item goes in the trash.', 'green');
+                        score++;
+                    } else {
+                        displayMessage('Incorrect.', 'red');
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            updateScore();
+
+            // Check if the game has ended
+            if (displayedItems.length === items.length) {
+                displayMessage(`Game Over! Your score is ${score}/${maxScore}.`, 'blue');
+                // Disable the buttons
+                document.getElementById('Trash_btn').disabled = true;
+                document.getElementById('Compose_btn').disabled = true;
+                document.getElementById('Recycling_bin_btn').disabled = true;
+                document.getElementById('GreenBin_btn').disabled = true;
+            } else {
+                // After handling the click, update the item text
+                updateItemText();
+            }
+        }
+
+        // Initialize with a random item
+        updateItemText();
+        updateScore();
+    </script>
+</body>
+</html>
